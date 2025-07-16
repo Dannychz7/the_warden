@@ -1,5 +1,5 @@
 # the_warden
-
+# Version: 1.0
 The Warden – Local AI SOC Analyst (MCP v0)
 
 Quick‑start + requirements guide to run The Warden on your Mac or Linux workstation.
