@@ -1,0 +1,10 @@
+# Core dependencies for MCP agent dev
+requests
+
+# LLM support (if not using Ollama, this is optional)
+# If you're compiling manually with llama-cpp-python
+llama-cpp-python[metal]  # Metal-accelerated backend for Mac
+
+# Optional: gRPC support if you want to scale up later
+grpcio
+grpcio-tools
