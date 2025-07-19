@@ -33,7 +33,7 @@ Try commands such as:
 - what is ThreatFox?
 The server will feed your prompt (or the mock Google result) to the LLM, then stream back a SOC‑style advisory.
 
-
-
 # UPDATES:
     07/16/25 - Implemented threatFox and abuseIPDB api calls
+    07/17/25 - Created Qwen Decsions, allows the AI to call and make decisions
+     

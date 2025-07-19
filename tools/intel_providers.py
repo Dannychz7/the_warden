@@ -10,6 +10,7 @@ THREATFOX_API_KEY = os.getenv("THREATFOX_API_KEY")
 ABUSEIPDB_API_KEY = os.getenv("ABUSEIPDB_API_KEY")
 
 def query_threatfox(days: int = 1):
+    print(f"Here ate query_threatfox()")
     url = "https://threatfox-api.abuse.ch/api/v1/"
     headers = {
         "Accept": "application/json",
@@ -56,6 +57,7 @@ def query_threatfox(days: int = 1):
 
 
 def query_abuseip(ip: str):
+    print(f"Here at query_abuseip()")
     if not ABUSEIPDB_API_KEY:
         return {"error": "AbuseIPDB API key not configured"}
 

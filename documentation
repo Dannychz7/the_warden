@@ -1,0 +1,25 @@
+===== Return response for how an AI or LLM should respond with =====
+- Expected response structure from the LLM
+
+We'll define what a model should return. For example:
+{
+  "action": "query_abuseip",
+  "parameters": {
+    "ip": "8.8.8.8"
+  }
+}
+You can enforce this by:
+    - Updating your system message with an expected JSON response schema
+    - Validating that the LLM’s response matches it
+
+project formart:
+<--------------------------------------------->
+/project-root
+├── the_warden.py       <-- The main entrypoint for user interaction (Client)
+├── mcp_server.py       <-- The backend server that receives and processes requests
+├── llm_client.py       <-- Handles LLM communication and model decision parsing
+├── tools/
+│   ├── tool_schema.py  <-- Schema for tools / tool registry
+│   └── threat_apis.py  <-- Implement your actual tools (query_threatfox, abuseip, etc.)
+├── requirements.txt
+└── README.md
