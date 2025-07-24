@@ -1,0 +1,28 @@
+{
+  "mcpServers": {
+    "abuseipdb-server": {
+      "command": "python3",
+      "args": ["./abuseipdb_server.py"],
+      "description": "IP reputation checking via AbuseIPDB API",
+      "capabilities": ["tools"],
+      "transport": "stdio",
+      "env": {
+        "ABUSEIPDB_API_KEY": "your-abuseipdb-api-key-here"
+      }
+    },
+    "threatfox-server": {
+      "command": "python3", 
+      "args": ["./threatfox_server.py"],
+      "description": "Threat intelligence from ThreatFox (abuse.ch)",
+      "capabilities": ["tools"],
+      "transport": "stdio",
+      "env": {
+        "THREATFOX_API_KEY": "optional-threatfox-api-key"
+      }
+    }
+  },
+  "clientSettings": {
+    "timeout": 30000,
+    "retryAttempts": 3
+  }
+}

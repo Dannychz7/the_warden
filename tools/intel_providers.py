@@ -73,7 +73,7 @@ def query_abuseip(ip: str):
     }
     params = {
         "ipAddress": ip,
-        "maxAgeInDays": "30"
+        "maxAgeInDays": "365"
     }
 
     try:
@@ -86,9 +86,10 @@ def query_abuseip(ip: str):
             return {"error": "Unexpected AbuseIPDB response", "details": data}
 
         d = data["data"]
+        # print(d)
         return {
             "ip": ip,
-            "abuse_confidence": d.get("abuseConfidencePercentage", 0),
+            "abuse_confidence": d.get("abuseConfidenceScore", 0),
             "country": d.get("countryCode", "Unknown"),
             "usage_type": d.get("usageType", "Unknown"),
             "isp": d.get("isp", "Unknown"),
@@ -101,5 +102,9 @@ def query_abuseip(ip: str):
             "source": "AbuseIPDB"
         }
 
+
     except Exception as e:
         return {"error": f"AbuseIPDB request failed: {str(e)}"}
+
+print(query_abuseip("34.238.45.183"))
+print(query_threatfox())
