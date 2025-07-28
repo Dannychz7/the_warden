@@ -73,7 +73,7 @@ def test_server(server_file, test_name):
                 "method": "tools/call",
                 "params": {
                     "name": "check_ip_reputation",
-                    "arguments": {"ip": "104.234.115.150"}  # Google DNS - should be clean
+                    "arguments": {"ip": "8.8.8.8"}  # Google DNS - should be clean
                 }
             }
         else:  # ThreatFox
@@ -116,7 +116,7 @@ def test_server(server_file, test_name):
                             print(f"   IP: {data.get('ip', 'N/A')}")
                             print(f"   Threat Level: {data.get('threat_level', 'N/A')}")
                             print(f"   Confidence: {data.get('abuseConfidenceScore', 'N/A')}%")
-                            print(f"   Nume of Reports: {data.get('total_reports', 'N/A')}")
+                            print(f"   Number of Reports: {data.get('total_reports', 'N/A')}")
                         else:
                             print(data)
                             print(f"   Total IOCs: {data.get('total_results', 'N/A')}")
@@ -149,11 +149,11 @@ def main():
         with open('.env', 'r') as f:
             env_content = f.read()
             if 'your_abuseipdb_api_key_here' in env_content:
-                print("\n⚠️  WARNING: Please update your .env file with real API keys!")
+                print("\n  WARNING: Please update your .env file with real API keys!")
                 print("   Edit .env and replace 'your_abuseipdb_api_key_here' with your actual API key")
                 print("   Get your key from: https://www.abuseipdb.com/api")
     except FileNotFoundError:
-        print("\n⚠️  No .env file found. Creating template...")
+        print("\n No .env file found. Creating template...")
         with open('.env', 'w') as f:
             f.write("# AbuseIPDB API Key (required)\n")
             f.write("ABUSEIPDB_API_KEY=your_abuseipdb_api_key_here\n")

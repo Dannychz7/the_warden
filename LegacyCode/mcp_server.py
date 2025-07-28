@@ -1,6 +1,6 @@
 import socket
 from typing import Optional
-from llm_client import handle_input  # move your core input handler here
+from LegacyCode.llm_client import handle_input  # move your core input handler here
 
 HOST = "127.0.0.1"
 PORT = 9999

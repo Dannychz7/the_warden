@@ -107,4 +107,5 @@ def query_abuseip(ip: str):
         return {"error": f"AbuseIPDB request failed: {str(e)}"}
 
 print(query_abuseip("34.238.45.183"))
-print(query_threatfox())
+results = query_threatfox()
+print(results[-1])
