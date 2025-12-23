@@ -233,13 +233,7 @@ Edit `mcp_server_config.json` to customize server settings:
 
 ---
 
-## License
-
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
-
----
-
-## 🙏 Acknowledgments
+## Acknowledgments
 
 - Built on the [Model Context Protocol](https://modelcontextprotocol.io)
 - Threat intelligence powered by [AbuseIPDB](https://www.abuseipdb.com) and [ThreatFox](https://threatfox.abuse.ch)
