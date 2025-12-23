@@ -39,9 +39,9 @@ def test_server(server_file, test_name):
         
         response = process.stdout.readline()
         if response:
-            print(f"✓ Initialize: {json.loads(response).get('result', {}).get('serverInfo', {}).get('name', 'OK')}")
+            print(f" Initialize: {json.loads(response).get('result', {}).get('serverInfo', {}).get('name', 'OK')}")
         else:
-            print("✗ No response to initialize")
+            print(" No response to initialize")
         
         # Test 2: List tools
         print("2. Testing tools list...")
@@ -58,11 +58,11 @@ def test_server(server_file, test_name):
         if response:
             tools_data = json.loads(response)
             tools = tools_data.get('result', {}).get('tools', [])
-            print(f"✓ Found {len(tools)} tools:")
+            print(f" Found {len(tools)} tools:")
             for tool in tools:
                 print(f"   - {tool.get('name', 'Unknown')}: {tool.get('description', 'No description')[:60]}...")
         else:
-            print("✗ No response to tools/list")
+            print(" No response to tools/list")
         
         # Test 3: Call a tool (server-specific)
         print("3. Testing tool call...")
@@ -126,9 +126,9 @@ def test_server(server_file, test_name):
                     except:
                         print(f"   Response preview: {content[:100]}...")
             else:
-                print(f"✗ Tool call failed: {result.get('error', 'Unknown error')}")
+                print(f" Tool call failed: {result.get('error', 'Unknown error')}")
         else:
-            print("✗ No response to tool call")
+            print(" No response to tool call")
         
         # Cleanup
         process.terminate()
@@ -138,7 +138,7 @@ def test_server(server_file, test_name):
             process.kill()
             
     except Exception as e:
-        print(f"✗ Test failed with exception: {str(e)}")
+        print(f" Test failed with exception: {str(e)}")
 
 def main():
     print("MCP Threat Intelligence Servers Test")

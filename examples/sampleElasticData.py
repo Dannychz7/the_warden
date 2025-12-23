@@ -542,7 +542,7 @@ def simulate_user_activity(external_ip: str = None):
         
         # If malicious, simulate brute force with multiple failed attempts
         if malicious:
-            print("🚨 Simulating brute force attack pattern...")
+            print(" Simulating brute force attack pattern...")
             
             # Generate 10+ failed attempts before success
             failed_attempts = random.randint(10, 15)
@@ -590,7 +590,7 @@ def simulate_user_activity(external_ip: str = None):
 
 def main():
     """Main function to orchestrate the logging simulation."""
-    print("🚀 Starting Elasticsearch Security Logs Generator")
+    print(" Starting Elasticsearch Security Logs Generator")
     print(f"Target Elasticsearch: {ELASTICSEARCH_URL}")
     
     # Test Elasticsearch connection
@@ -598,20 +598,20 @@ def main():
         response = requests.get(ELASTICSEARCH_URL)
         if response.status_code == 200:
             cluster_info = response.json()
-            print(f"✓ Connected to Elasticsearch cluster: {cluster_info.get('cluster_name')}")
+            print(f" Connected to Elasticsearch cluster: {cluster_info.get('cluster_name')}")
         else:
-            print("✗ Failed to connect to Elasticsearch")
+            print(" Failed to connect to Elasticsearch")
             return
     except Exception as e:
-        print(f"✗ Cannot connect to Elasticsearch: {e}")
+        print(f" Cannot connect to Elasticsearch: {e}")
         return
     
     # Create indices
-    print("\n📋 Creating Elasticsearch indices...")
+    print("\n Creating Elasticsearch indices...")
     create_elasticsearch_indices()
     
     # Get external IP from user
-    external_ip = input("\n🌐 Enter external IP (or press Enter for random): ").strip()
+    external_ip = input("\n Enter external IP (or press Enter for random): ").strip()
     if not external_ip:
         external_ip = None
         print("Using random external IPs")
@@ -619,14 +619,14 @@ def main():
         print(f"Using external IP: {external_ip}")
     
     # Start simulation
-    print("\n🎭 Starting user activity simulation...")
+    print("\n Starting user activity simulation...")
     simulate_user_activity(external_ip)
     
-    print(f"\n🎉 Simulation complete! Check your Elasticsearch indices:")
+    print(f"\n Simulation complete! Check your Elasticsearch indices:")
     for index in [INDEX1, INDEX2, INDEX3, INDEX4, INDEX5]:
         print(f"   - {index}")
     
-    print(f"\n📊 Query example:")
+    print(f"\n Query example:")
     print(f"curl -X GET '{ELASTICSEARCH_URL}/{INDEX1}/_search?pretty&q=is_malicious:true'")
 
 if __name__ == "__main__":

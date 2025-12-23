@@ -20,7 +20,7 @@ def test_abuseipdb_api_detailed():
     print("=" * 40)
     
     if not api_key:
-        print("❌ ERROR: No ABUSEIPDB_API_KEY found in .env file")
+        print("ERROR: No ABUSEIPDB_API_KEY found in .env file")
         return False
     
     print(f"✓ API key found (length: {len(api_key)} characters)")
@@ -52,18 +52,18 @@ def test_abuseipdb_api_detailed():
         print(f"Response headers: {dict(response.headers)}")
         
         if response.status_code == 401:
-            print("❌ ERROR: Invalid API key!")
+            print("ERROR: Invalid API key!")
             return False
         elif response.status_code == 429:
-            print("❌ ERROR: Rate limit exceeded!")
+            print("ERROR: Rate limit exceeded!")
             return False
         elif response.status_code != 200:
-            print(f"❌ ERROR: HTTP {response.status_code}")
+            print(f"ERROR: HTTP {response.status_code}")
             print(f"Response text: {response.text}")
             return False
         
         # Print raw response for debugging
-        print(f"\n📋 Raw JSON Response:")
+        print(f"\n Raw JSON Response:")
         print("-" * 50)
         raw_response = response.text
         print(raw_response)
@@ -73,14 +73,14 @@ def test_abuseipdb_api_detailed():
         try:
             data = response.json()
         except json.JSONDecodeError as e:
-            print(f"❌ ERROR: Failed to parse JSON: {e}")
+            print(f" ERROR: Failed to parse JSON: {e}")
             return False
         
-        print(f"\n📊 Parsed Response Structure:")
+        print(f"\nParsed Response Structure:")
         print(json.dumps(data, indent=2))
         
         if "data" not in data:
-            print(f"❌ ERROR: Missing 'data' field in response")
+            print(f" ERROR: Missing 'data' field in response")
             return False
         
         result = data["data"]
@@ -100,25 +100,25 @@ def test_abuseipdb_api_detailed():
         num_distinct_users = result.get("numDistinctUsers", 0)
         last_reported = result.get("lastReportedAt", "N/A")
         
-        print("\n✅ SUCCESS! API Response Received")
+        print("\n SUCCESS! API Response Received")
         print("=" * 40)
         print(f"IP Address: {ip_address}")
         print(f"Is Public: {is_public}")
         print(f"IP Version: {ip_version}")
         print(f"Is Whitelisted: {is_whitelisted}")
-        print(f"🚨 Abuse Confidence: {confidence}%")
-        print(f"📊 Total Reports: {total_reports}")
-        print(f"👥 Distinct Reporters: {num_distinct_users}")
-        print(f"🌍 Country: {country_name} ({country_code})")
-        print(f"🏢 ISP: {isp}")
-        print(f"🌐 Domain: {domain}")
-        print(f"🏷️  Usage Type: {usage_type}")
-        print(f"⏰ Last Reported: {last_reported}")
+        print(f" Abuse Confidence: {confidence}%")
+        print(f" Total Reports: {total_reports}")
+        print(f" Distinct Reporters: {num_distinct_users}")
+        print(f"Country: {country_name} ({country_code})")
+        print(f" ISP: {isp}")
+        print(f" Domain: {domain}")
+        print(f" Usage Type: {usage_type}")
+        print(f" Last Reported: {last_reported}")
         
         # Check for reports array (verbose mode)
         if "reports" in result:
             reports = result["reports"]
-            print(f"\n📝 Recent Reports ({len(reports)} shown):")
+            print(f"\n Recent Reports ({len(reports)} shown):")
             for i, report in enumerate(reports[:3]):  # Show first 3 reports
                 reported_at = report.get("reportedAt", "N/A")
                 comment = report.get("comment", "No comment")[:100] + "..." if len(report.get("comment", "")) > 100 else report.get("comment", "No comment")
@@ -130,34 +130,34 @@ def test_abuseipdb_api_detailed():
         # Analysis
         print("\n🔍 Analysis:")
         if confidence >= 75:
-            print(f"   🚨 HIGH THREAT - {confidence}% confidence with {total_reports} reports")
+            print(f"    HIGH THREAT - {confidence}% confidence with {total_reports} reports")
         elif confidence >= 25:
-            print(f"   ⚠️  MEDIUM THREAT - {confidence}% confidence with {total_reports} reports")
+            print(f"     MEDIUM THREAT - {confidence}% confidence with {total_reports} reports")
         elif confidence > 0:
-            print(f"   ⚡ LOW THREAT - {confidence}% confidence with {total_reports} reports")
+            print(f"    LOW THREAT - {confidence}% confidence with {total_reports} reports")
         else:
-            print(f"   ✅ CLEAN - No abuse confidence, but {total_reports} reports exist")
+            print(f"    CLEAN - No abuse confidence, but {total_reports} reports exist")
             if total_reports > 0:
-                print(f"      🤔 NOTE: {total_reports} reports exist but 0% confidence is unusual")
+                print(f"       NOTE: {total_reports} reports exist but 0% confidence is unusual")
                 print(f"           This might indicate old/expired reports or false positives")
         
         return True
         
     except requests.exceptions.Timeout:
-        print("❌ ERROR: Request timeout")
+        print(" ERROR: Request timeout")
         return False
     except requests.exceptions.ConnectionError:
-        print("❌ ERROR: Connection failed")
+        print(" ERROR: Connection failed")
         return False
     except Exception as e:
-        print(f"❌ ERROR: {str(e)}")
+        print(f" ERROR: {str(e)}")
         return False
 
 def compare_with_known_good_ip():
     """Test with a known clean IP for comparison"""
     api_key = os.getenv("ABUSEIPDB_API_KEY")
     
-    print("\n🔍 Testing with Known Clean IP (Google DNS)")
+    print("\n Testing with Known Clean IP (Google DNS)")
     print("=" * 40)
     
     clean_ip = "8.8.8.8"  # Google's public DNS - should be clean
@@ -186,15 +186,15 @@ def compare_with_known_good_ip():
             print(f"  Reports: {reports}")
             
             if confidence == 0:
-                print("  ✅ Clean IP shows 0% as expected")
+                print("   Clean IP shows 0% as expected")
             else:
-                print(f"  ⚠️  Even clean IP shows {confidence}% - API might be working correctly")
+                print(f"    Even clean IP shows {confidence}% - API might be working correctly")
                 
     except Exception as e:
         print(f"Clean IP test failed: {e}")
 
 if __name__ == "__main__":
-    print("🔍 Enhanced AbuseIPDB API Diagnostic\n")
+    print(" Enhanced AbuseIPDB API Diagnostic\n")
     
     # Main test
     success = test_abuseipdb_api_detailed()
@@ -204,19 +204,19 @@ if __name__ == "__main__":
         compare_with_known_good_ip()
     
     print("\n" + "=" * 60)
-    print("🎯 DEBUGGING RECOMMENDATIONS")
+    print(" DEBUGGING RECOMMENDATIONS")
     print("=" * 60)
     
     if success:
-        print("✅ API is working - Check the raw response above")
+        print(" API is working - Check the raw response above")
         print("   • Look for discrepancies in the parsed vs expected data")
         print("   • Check if maxAgeInDays parameter affects results")
         print("   • Verify your MCP server is using the same API endpoint")
         print("   • Consider that AbuseIPDB data can change over time")
     else:
-        print("❌ API test failed - Fix the connection issues first")
+        print(" API test failed - Fix the connection issues first")
     
-    print("\n📋 Next Steps:")
+    print("\n Next Steps:")
     print("   1. Compare raw JSON response with expected values")
     print("   2. Check if your MCP server uses different parameters")
     print("   3. Verify the IP address hasn't been recently cleaned/updated")
