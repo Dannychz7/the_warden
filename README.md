@@ -5,6 +5,8 @@ The Warden is an autonomous cybersecurity AI agent that performs real-time threa
 
 ---
 
+![The Warden Startup Process](images/wardenStartUp.png)
+
 ## Key Features
 
 - **Multi-Source Threat Intelligence**: Integrates AbuseIPDB, ThreatFox, and Elasticsearch for comprehensive threat correlation
@@ -14,6 +16,8 @@ The Warden is an autonomous cybersecurity AI agent that performs real-time threa
 - **Extensible Architecture**: MCP-based design allows easy integration of additional threat intelligence sources
 
 ---
+
+![The Warden POC](images/The_Warden_POC_img.png)
 
 ## Architecture
 
