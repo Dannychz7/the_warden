@@ -225,6 +225,12 @@ Edit `mcp_server_config.json` to customize server settings:
 
 ## Changelog
 
+### Version 2.0 (New Release, Expected Feb  2026)
+- With the release of libraries like DSPy, The Warden is undergoing a new architecture design.
+- **Jan 2026**: Redesigned The Warden architecture leveraging new libraries like DSPy.
+- **Jan 2026**: Streamlined agentic use cases for programmatic prompt engineering and agent reasoning.
+- **Jan 2026**: Optimized autonomous security analysis to maintain cutting-edge performance.
+
 ### Version 1.1 (Current)
 - **Dec 2025**: Added autonomous decision engine with Qwen3 reasoning
 - **Dec 2025**: Integrated ThreatFox and AbuseIPDB API support
