@@ -1,2 +1,33 @@
+# Virtual environments
 .venv/
+env/
+ENV/
+
+# Python cache
+__pycache__/
+*.pyc
+
+# OS/editor garbage
+.DS_Store
+.vscode/
+.idea/
+
+# Secrets and local config
 .env
+
+# Logs & raw data
+logs/
+*.jsonl
+
+# Old dev code
+LegacyCode/
+deprecated/
+
+# Package build output
+build/
+dist/
+*.egg-info/
+
+# Local config files
+*.local
+*.lock

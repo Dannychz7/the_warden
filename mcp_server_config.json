@@ -2,25 +2,25 @@
   "mcpServers": {
     "abuseipdb-server": {
       "command": "python3",
-      "args": ["./abuseIP_mcp_server.py"],
+      "args": ["./servers/abuseIP_mcp_server.py"],
       "description": "IP reputation checking via AbuseIPDB API",
       "capabilities": ["tools"],
       "transport": "stdio"
     },
     "threatfox-server": {
-      "command": "python3", 
-      "args": ["./threatFox_mcp_server.py"],
+      "command": "python3",
+      "args": ["./servers/threatFox_mcp_server.py"],
       "description": "Threat intelligence from ThreatFox (abuse.ch)",
       "capabilities": ["tools"],
       "transport": "stdio"
     },
     "elastic-server": {
-      "command": "python3", 
-      "args": ["./elastic_mcp_server.py"],
-      "description": "SIEM tool for querying Elasticsearch indices with IP/username search, document retrieval, and advanced DSL queries",
+      "command": "python3",
+      "args": ["./servers/elastic_mcp_server.py"],
+      "description": "SIEM tool for querying Elasticsearch",
       "capabilities": ["tools"],
       "transport": "stdio"
-    }       
+    }
   },
   "clientSettings": {
     "timeout": 60000,

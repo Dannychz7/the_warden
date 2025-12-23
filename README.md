@@ -252,4 +252,6 @@ Edit `mcp_server_config.json` to customize server settings:
 
 **Disclaimer**: All logs, IP addresses, and network traffic data shown in this project are sample datasets or synthetically generated. They are intended solely to simulate enterprise traffic for research and development purposes and do not represent real individuals, entities, or live production environments.
 
+---
+
 *The Warden is in active development. Star the repo to follow progress!*
