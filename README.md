@@ -1,39 +1,257 @@
 # The Warden
-# Version: 1.1
-The Warden – Local AI SOC Analyst (MCP v0)
+**Autonomous AI-Powered SOC Analyst**
 
-Quick‑start + requirements guide to run The Warden on your Mac or Linux workstation.
+The Warden is an autonomous cybersecurity AI agent that performs real-time threat analysis by integrating multiple threat intelligence sources with advanced language models. Built on the Model Context Protocol (MCP), it functions as a tireless SOC analyst—correlating data across AbuseIPDB, ThreatFox, and Elasticsearch to deliver actionable security insights.
 
-Developed and tested on a High-spec MacBook Pro M3 Max. Performance will vary on lighter machines; trim model size or use a hosted LLM if needed.
+---
 
-# Setup Timeline
-1. Create a Python virtual environment
-    - python3 -m venv .venv && source .venv/bin/activate
+## Key Features
 
-2. Install dependencies
-    - pip install -r requirements.txt
-If you want local GGUF inference instead of Ollama, compile with:
-    - pip install 'llama-cpp-python[metal]'
+- **Multi-Source Threat Intelligence**: Integrates AbuseIPDB, ThreatFox, and Elasticsearch for comprehensive threat correlation
+- **Autonomous Decision Making**: AI-driven analysis and tool orchestration with minimal human intervention
+- **Real-Time SIEM Integration**: Direct Elasticsearch querying across multiple log sources (VPN, authentication, system events)
+- **Structured Reporting**: Generates professional SOC-style threat analysis reports with risk assessments and remediation guidance
+- **Extensible Architecture**: MCP-based design allows easy integration of additional threat intelligence sources
 
-3. Pull an LLM with Ollama
-    - ollama pull qwen3:8b
-Pick any Ollama‑compatible model that fits your hardware and supports reasoning (e.g. Llama‑3‑8B, Phi‑3‑Mini).
+---
 
-4. Smoke‑test the LLM
-    - python test_llm.py
-The script POSTs to Ollama’s REST endpoint at http://localhost:11434/ and prints the assistant’s reply.
+## Architecture
 
-5. Run the minimal MCP server
-    - python mcp_server.py
-Open another terminal and start the demo client:
-    - python test_client.py
+```
+┌─────────────────┐
+│   The Warden    │ ← Qwen3 LLM (Local/Ollama)
+│  (AI Analyst)   │
+└────────┬────────┘
+         │
+    ┌────┴────┐
+    │   MCP   │ ← Model Context Protocol
+    │ Manager │
+    └────┬────┘
+         │
+    ┌────┴─────────────────────────┐
+    │                              │
+┌───▼────┐  ┌──────────┐  ┌───────▼──────┐
+│AbuseIP │  │ThreatFox │  │Elasticsearch │
+│  DB    │  │  Intel   │  │     SIEM     │
+└────────┘  └──────────┘  └──────────────┘
+```
 
-Try commands such as:
-- search: suspicious domain activity
-- what is ThreatFox?
-The server will feed your prompt (or the mock Google result) to the LLM, then stream back a SOC‑style advisory.
+**Available Tools (15 total)**:
+- IP reputation checking and bulk analysis
+- IOC searching and malware intelligence
+- Cross-index log correlation
+- Advanced DSL query execution
 
-# UPDATES:
-    07/16/25 - Implemented threatFox and abuseIPDB api calls
-    07/17/25 - Created Qwen Decsions, allows the AI to call and make decisions
-     
+---
+
+## Quick Start
+
+### Prerequisites
+
+- **Python 3.8+**
+- **Ollama** (for local LLM inference)
+- **High-performance hardware recommended**: Tested on MacBook Pro M3 Max
+  - Minimum: 16GB RAM, modern multi-core CPU
+  - For lighter systems: Use smaller models or cloud-hosted LLMs
+
+### Installation
+
+1. **Clone the repository**
+   ```bash
+   git clone https://github.com/yourusername/the-warden.git
+   cd the-warden
+   ```
+
+2. **Set up Python environment**
+   ```bash
+   python3 -m venv .venv
+   source .venv/bin/activate  # On Windows: .venv\Scripts\activate
+   ```
+
+3. **Install dependencies**
+   ```bash
+   pip install -r requirements.txt
+   ```
+
+   *Optional: For local GGUF inference with hardware acceleration*
+   ```bash
+   pip install 'llama-cpp-python[metal]'  # macOS Metal
+   # OR
+   pip install 'llama-cpp-python[cuda]'   # NVIDIA CUDA
+   ```
+
+4. **Configure API keys**
+   
+   Create a `.env` file in the project root:
+   ```env
+   ABUSEIPDB_API_KEY=your_abuseipdb_key
+   ELASTIC_URL=https://your-elastic-instance:9200
+   ELASTIC_API_KEY=your_elastic_key
+   ```
+
+5. **Pull LLM model**
+   ```bash
+   ollama pull qwen3:8b
+   ```
+   
+   *Recommended models*: `qwen3:8b`, `llama3:8b`, `phi3:mini` (adjust based on hardware)
+
+---
+
+## Usage
+
+### Basic Operation
+
+1. **Start The Warden**
+   ```bash
+   python theWarden.py
+   ```
+
+2. **Example queries**
+   ```
+   Query: Tell me about ip: 24.251.139.100
+   Query: Search for IOC hash: a3f8d9e2c1b...
+   Query: Check user login anomalies for admin@company.com
+   ```
+
+### Testing Components
+
+**Test LLM connection**:
+```bash
+python test_llm.py
+```
+
+**Test MCP servers**:
+```bash
+python test_mcp.py
+```
+
+---
+
+## Sample Output
+
+```
+======================================================================
+THREAT ANALYSIS REPORT
+======================================================================
+
+# SOC Analyst Report: IP 24.251.139.100  
+**Generated by The Warden | Autonomous SOC Analyst**  
+
+## Executive Summary  
+The IP address 24.251.139.100 has been evaluated for potential 
+malicious activity. Based on comprehensive checks across threat 
+intelligence platforms, the IP is deemed CLEAN.
+
+## Key Findings  
+- Reputation Check: AbuseIPDB reports CLEAN (abuse score: 0)
+- ISP: Cox Communications (United States)
+- Threat Intelligence: No matches in ThreatFox or internal indices
+
+## Threat Assessment  
+Threat Level: Low
+- Associated with legitimate ISP
+- No malicious activity detected
+...
+```
+
+---
+
+## Development Roadmap
+
+- [x] Core MCP framework implementation
+- [x] AbuseIPDB integration
+- [x] ThreatFox API integration
+- [x] Elasticsearch SIEM connectivity
+- [x] Autonomous decision engine
+- [ ] Machine Learning anomaly detection models
+- [ ] Real-time alerting and webhook integration
+- [ ] Multi-tenant deployment support
+- [ ] Advanced correlation analytics
+- [ ] Custom playbook orchestration
+
+---
+
+## Project Structure
+
+```
+the-warden/
+├── theWarden.py              # Main orchestration engine
+├── mcp_manager.py            # MCP server lifecycle management
+├── llm_interface.py          # LLM abstraction layer
+├── tool_executor.py          # Tool execution handler
+├── abuseIP_mcp_server.py     # AbuseIPDB MCP server
+├── threatFox_mcp_server.py   # ThreatFox MCP server
+├── elastic_mcp_server.py     # Elasticsearch MCP server
+├── tools/                    # Tool schemas and providers
+├── logs/                     # Sample log data for testing
+└── LegacyCode/               # Previous implementation versions
+```
+
+---
+
+## Configuration
+
+Edit `mcp_server_config.json` to customize server settings:
+
+```json
+{
+  "timeout": 60000,
+  "retryAttempts": 3,
+  "servers": {
+    "abuseipdb-server": {
+      "command": "python3",
+      "args": ["./abuseIP_mcp_server.py"]
+    }
+  }
+}
+```
+
+---
+
+## Performance Notes
+
+- **Hardware Requirements**: Performance scales with CPU/GPU capability
+- **Model Selection**: Balance between accuracy and speed
+  - Small models (3-7B): Faster responses, good for straightforward analysis
+  - Large models (13B+): Deeper reasoning, better for complex threats
+- **Concurrent Analysis**: Currently single-threaded; parallel processing planned
+
+---
+
+## Changelog
+
+### Version 1.1 (Current)
+- **Dec 2025**: Added autonomous decision engine with Qwen3 reasoning
+- **Dec 2025**: Integrated ThreatFox and AbuseIPDB API support
+- **Dec 2025**: Implemented Elasticsearch cross-index correlation
+- **Dec 2025**: Enhanced report generation with structured SOC analysis
+
+### Version 1.0
+- Initial MCP framework implementation
+- Basic threat intelligence querying
+
+---
+
+## License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+---
+
+## 🙏 Acknowledgments
+
+- Built on the [Model Context Protocol](https://modelcontextprotocol.io)
+- Threat intelligence powered by [AbuseIPDB](https://www.abuseipdb.com) and [ThreatFox](https://threatfox.abuse.ch)
+- LLM inference via [Ollama](https://ollama.ai)
+
+---
+
+## Contact
+
+**Daniel Chavez**  
+[contact.dchavez@gmail.com](mailto:contact.dchavez@gmail.com) | [LinkedIn](https://www.linkedin.com/in/daniel-chavez7/) | [GitHub](https://github.com/Dannychz7)
+
+---
+
+*The Warden is in active development. Star the repo to follow progress!*
